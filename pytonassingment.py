@@ -60,3 +60,44 @@ def read_data_from_csv(filename='sampleData.csv'):
     except Exception as e:
         print("Failed to read file:", e)
         return []
+        # Main menu
+def main():
+    while True:
+        print("\n***** Grouped Data Application *****")
+        print("1. Enter Data and Save in CSV")
+        print("2. Show Statistics")
+        print("3. Draw Histogram")
+        print("4. Exit")
+
+        choice = input("Enter your choice (1-4): ")
+
+        if choice == '1':
+            user_input = input("Enter numbers separated by commas: ")
+            try:
+                data = [int(x.strip()) for x in user_input.split(',')]
+                save_data_to_csv(data)
+            except ValueError:
+                print("Invalid input. Please enter only numbers.")
+        
+        elif choice == '2':
+            data = read_data_from_csv()
+            if data:
+                show_statistics(data)
+        
+        elif choice == '3':
+            data = read_data_from_csv()
+            if data:
+                class_width = int(input("Enter class width (e.g., 5): "))
+                grouped_df = group_data(data, class_width)
+                if grouped_df is not None:
+                    print(grouped_df)
+                    draw_histogram(grouped_df, class_width)
+        
+        elif choice == '4':
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid choice. Please enter 1-4.")
+
+if __name__ == "__main__":
+    main()
